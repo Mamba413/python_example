@@ -1,10 +1,17 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/eigen.h>
+
+#include <Eigen/Eigen>
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
 int add(int i, int j) {
     return i + j;
+}
+
+double det(Eigen::MatrixXd xs) {
+    return xs.determinant();
 }
 
 namespace py = pybind11;
@@ -34,6 +41,8 @@ PYBIND11_MODULE(python_example, m) {
 
         Some other explanation about the subtract function.
     )pbdoc");
+
+    m.def("det", &det);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
